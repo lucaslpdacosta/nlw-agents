@@ -1,0 +1,22 @@
+table rooms {
+  id uuid [pk, not null, default: `gen_random_uuid()`]
+  name text [not null]
+  description text
+  createdAt timestamp [not null, default: `now()`]
+}
+
+table questions {
+  id uuid [pk, not null, default: `gen_random_uuid()`]
+  roomId uuid [not null, ref: > rooms.id]
+  question text [not null]
+  answer text
+  createdAt timestamp [not null, default: `now()`]
+}
+
+table audio_chunks {
+  id uuid [pk, not null, default: `gen_random_uuid()`]
+  roomId uuid [not null, ref: > rooms.id]
+  transcription text [not null]
+  embeddings vector(768) [not null]
+  createdAt timestamp [not null, default: `now()`]
+}
